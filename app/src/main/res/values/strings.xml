@@ -1,3 +1,18 @@
 <resources>
-    <string name="app_name">AppCiclo4</string>
+    <string name="app_name">G5–104</string>
+    //String MainActivity
+    <string name="btnInit">Login</string>
+
+    //String Home
+    <string name="textTitle">Products</string>
+    <string name="textProduct1">Blue Jean</string>
+    <string name="textProduct2">Black Shoes</string>
+    <string name="textProduct3">White T-Shirt</string>
+    <string name="btnProduct1">Information</string>
+    <string name="btnProduct2">Information</string>
+    <string name="btnProduct3">Information</string>
+
+    //String Home
+    <string name="btnToHome">Back</string>
+
 </resources>
