@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "349855571010",
+    "project_id": "misiontic104",
+    "storage_bucket": "misiontic104.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:349855571010:android:eb3cd8567fb9641e0021db",
+        "android_client_info": {
+          "package_name": "com.g104g5.appciclo4"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "349855571010-0u4e8q7gqev1cbpeospps8dd47j1lm8r.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDE5tLCdJjvg-awsmXSF2j000jfMwbcFpw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "349855571010-0u4e8q7gqev1cbpeospps8dd47j1lm8r.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

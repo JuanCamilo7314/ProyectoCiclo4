@@ -1,63 +1,75 @@
 package com.g104g5.appciclo4;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.g104g5.appciclo4.Adapters.ProductAdapter;
+import com.g104g5.appciclo4.BD.DBHelper;
+import com.g104g5.appciclo4.Entities.Product;
+import com.g104g5.appciclo4.Services.ProductServices;
+
+import java.util.ArrayList;
 
 public class Home extends AppCompatActivity {
-    private Button btnProduct1,btnProduct2,btnProduct3;
-    private TextView textProduct1, textProduct2, textProduct3;
+    private DBHelper dbHelper;
+    private ProductServices productServices;
+    private ListView listViewProducts;
+    private ArrayList<Product> arrayProducts;
+    private ProductAdapter productAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        btnProduct1 = (Button) findViewById(R.id.btnProduct1);
-        btnProduct2 = (Button) findViewById(R.id.btnProduct2);
-        btnProduct3 = (Button) findViewById(R.id.btnProduct3);
+        try {
+            //byte[] img = "".getBytes();
+            dbHelper = new DBHelper(this);
+            //dbHelper.insertData("Blue Jean","Blue Jean Description","30",img);
+            //dbHelper.insertData("Black Shoes","Black Shoes Description","34",img);
+            //dbHelper.insertData("White T-Shirt","White T-Shirt Description","14",img);
+            //dbHelper.insertData("Product 4","Description Product 4","31",img);
+            //dbHelper.insertData("Product 5","Description Product 5","31",img);
+            //dbHelper.insertData("Product 6","Description Product 6","31",img);
+            productServices = new ProductServices();
+            Cursor cursor = dbHelper.getData();
+            arrayProducts = productServices.cursorToArray(cursor);
+            //Toast.makeText(this, "Insert OK", Toast.LENGTH_SHORT).show();
+        }catch (Exception ex){
+            Toast.makeText(this, "Error Lectura Base de Datos", Toast.LENGTH_SHORT).show();
+        }
+        productAdapter = new ProductAdapter(this,arrayProducts);
+        listViewProducts = (ListView) findViewById(R.id.listViewProducts);
+        listViewProducts.setAdapter(productAdapter);
 
-        textProduct1 = (TextView) findViewById(R.id.textProduct1);
-        textProduct2 = (TextView) findViewById(R.id.textProduct2);
-        textProduct3 = (TextView) findViewById(R.id.textProduct3);
+    }
 
-        btnProduct1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(),Productos.class);
-                intent.putExtra("title",textProduct1.getText().toString());
-                intent.putExtra("imageCode",R.drawable.product1);
-                intent.putExtra("description","Blue Jeans product description");
-                intent.putExtra("price","21 USD");
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.actionAdd:
+                Intent intent = new Intent(getApplicationContext(), ProductForm.class);
                 startActivity(intent);
-            }
-        });
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
 
-        btnProduct2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(),Productos.class);
-                intent.putExtra("title",textProduct2.getText().toString());
-                intent.putExtra("imageCode",R.drawable.product2);
-                intent.putExtra("description","Black Shoes product description");
-                intent.putExtra("price","45 USD");
-                startActivity(intent);
-            }
-        });
-
-        btnProduct3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(),Productos.class);
-                intent.putExtra("title",textProduct3.getText().toString());
-                intent.putExtra("imageCode",R.drawable.product3);
-                intent.putExtra("description","White T-shirt product description");
-                intent.putExtra("price","10 USD");
-                startActivity(intent);
-            }
-        });
     }
 }

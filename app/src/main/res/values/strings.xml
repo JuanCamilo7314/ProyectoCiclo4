@@ -15,4 +15,19 @@
     //String Home
     <string name="btnToHome">Back</string>
 
+
+    //String Menu
+    <string name="btnAdd">Add</string>
+    <string name="btnGet">Get</string>
+    <string name="btnDelete">Delete</string>
+    <string name="btnUpdate">Update</string>
+    <string name="tittleForm">Form</string>
+
+
+    //String productForm
+    <string name="name">Name</string>
+    <string name="description">Description</string>
+    <string name="price">Price</string>
+
+
 </resources>
