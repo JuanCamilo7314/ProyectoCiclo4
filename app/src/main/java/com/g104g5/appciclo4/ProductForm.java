@@ -216,7 +216,7 @@ public class ProductForm extends AppCompatActivity {
                 );
                 //dbHelper.insertData(product);
                 if(edit){
-                    Toast.makeText(getApplicationContext(),urlImage,Toast.LENGTH_SHORT).show();
+
                     product.setImage(urlImage);
                     product.setId(intentIn.getStringExtra("id"));
                     dbFirebase.updateDataById(product);
