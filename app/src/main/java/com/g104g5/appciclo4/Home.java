@@ -15,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.g104g5.appciclo4.Adapters.ProductAdapter;
+import com.g104g5.appciclo4.BD.DBFirebase;
 import com.g104g5.appciclo4.BD.DBHelper;
 import com.g104g5.appciclo4.Entities.Product;
 import com.g104g5.appciclo4.Services.ProductServices;
@@ -23,6 +24,7 @@ import java.util.ArrayList;
 
 public class Home extends AppCompatActivity {
     private DBHelper dbHelper;
+    private DBFirebase dbFirebase;
     private ProductServices productServices;
     private ListView listViewProducts;
     private ArrayList<Product> arrayProducts;
@@ -31,27 +33,24 @@ public class Home extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-
+        arrayProducts = new ArrayList<>();
         try {
-            //byte[] img = "".getBytes();
-            dbHelper = new DBHelper(this);
-            //dbHelper.insertData("Blue Jean","Blue Jean Description","30",img);
-            //dbHelper.insertData("Black Shoes","Black Shoes Description","34",img);
-            //dbHelper.insertData("White T-Shirt","White T-Shirt Description","14",img);
-            //dbHelper.insertData("Product 4","Description Product 4","31",img);
-            //dbHelper.insertData("Product 5","Description Product 5","31",img);
-            //dbHelper.insertData("Product 6","Description Product 6","31",img);
+            //dbHelper = new DBHelper(this);
+            dbFirebase = new DBFirebase();
             productServices = new ProductServices();
             Cursor cursor = dbHelper.getData();
             arrayProducts = productServices.cursorToArray(cursor);
-            //Toast.makeText(this, "Insert OK", Toast.LENGTH_SHORT).show();
+            //if(arrayProducts.size()==0){
+                //dbFirebase.syncData(dbHelper);
+            //}
         }catch (Exception ex){
-            Toast.makeText(this, "Error Lectura Base de Datos", Toast.LENGTH_SHORT).show();
+
         }
         productAdapter = new ProductAdapter(this,arrayProducts);
         listViewProducts = (ListView) findViewById(R.id.listViewProducts);
         listViewProducts.setAdapter(productAdapter);
 
+        dbFirebase.getData(productAdapter,arrayProducts);
     }
 
     @Override
@@ -62,9 +61,24 @@ public class Home extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        Intent intent;
         switch (item.getItemId()){
             case R.id.actionAdd:
-                Intent intent = new Intent(getApplicationContext(), ProductForm.class);
+                intent = new Intent(getApplicationContext(), ProductForm.class);
+                startActivity(intent);
+                return true;
+            case R.id.actionMap:
+                intent = new Intent(getApplicationContext(), Maps.class);
+                ArrayList<String> latitudes =new ArrayList<>();
+                ArrayList<String> longitudes =new ArrayList<>();
+
+                for (int k=0; k<arrayProducts.size();k++){
+                    latitudes.add(String.valueOf(arrayProducts.get(k).getLatitude()));
+                    longitudes.add(String.valueOf(arrayProducts.get(k).getLongitude()));
+
+                }
+                intent.putStringArrayListExtra("latitudes",latitudes);
+                intent.putStringArrayListExtra("longitudes",longitudes);
                 startActivity(intent);
                 return true;
             default:

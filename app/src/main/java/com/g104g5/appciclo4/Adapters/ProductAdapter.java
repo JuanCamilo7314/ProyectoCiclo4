@@ -1,19 +1,30 @@
 package com.g104g5.appciclo4.Adapters;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.g104g5.appciclo4.BD.DBFirebase;
 import com.g104g5.appciclo4.Entities.Product;
+import com.g104g5.appciclo4.Home;
+import com.g104g5.appciclo4.ProductForm;
 import com.g104g5.appciclo4.Products;
 import com.g104g5.appciclo4.R;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 
@@ -51,12 +62,15 @@ public class ProductAdapter extends BaseAdapter {
         TextView textDescriptionProduct = (TextView) view.findViewById(R.id.textDescriptionTemplate);
         TextView textPriceProduct = (TextView) view.findViewById(R.id.textPriceTemplate);
 
+        Button btnEditTemplate = (Button) view.findViewById(R.id.btnEditTemplate);
+        Button btnDeleteTemplate = (Button) view.findViewById(R.id.btnDeleteTemplate);
+
         Product product = arrayProducts.get(i);
 
-        byte[] image = product.getImage();
-        Bitmap bitmap = BitmapFactory.decodeByteArray(image,0,image.length);
+        Glide.with(context).load(product.getImage())
+                .override(150,150)
+                .into(imgProduct);
 
-        imgProduct.setImageBitmap(bitmap);
         textNameProduct.setText(product.getName());
         textDescriptionProduct.setText(product.getDescription());
         int Col = product.getPrice() * 5000;
@@ -67,7 +81,56 @@ public class ProductAdapter extends BaseAdapter {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context.getApplicationContext(), Products.class);
-                intent.putExtra("id", String.valueOf(product.getId()));
+                intent.putExtra("id",product.getId());
+                intent.putExtra("name",product.getName());
+                intent.putExtra("description",product.getDescription());
+                intent.putExtra("price",String.valueOf(product.getPrice()));
+                intent.putExtra("image",product.getImage());
+                intent.putExtra("latitude",product.getLatitude());
+                intent.putExtra("longitude",product.getLongitude());
+                context.startActivity(intent);
+            }
+        });
+
+        btnDeleteTemplate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                builder.setMessage("¿Delete Product?")
+                        .setTitle("Confirm")
+                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                DBFirebase dbFirebase = new DBFirebase();
+                                dbFirebase.deleteById(product.getId());
+                                Intent intent = new Intent(context.getApplicationContext(), Home.class);
+                                context.startActivity(intent);
+                            }
+                        })
+                        .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+
+                            }
+                        });
+                AlertDialog dialog = builder.create();
+                dialog.show();
+            }
+
+        });
+
+        btnEditTemplate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context.getApplicationContext(), ProductForm.class);
+                intent.putExtra("edit",true);
+                intent.putExtra("id",product.getId());
+                intent.putExtra("name",product.getName());
+                intent.putExtra("description",product.getDescription());
+                intent.putExtra("price",product.getPrice());
+                intent.putExtra("image",product.getImage());
+                intent.putExtra("latitude",product.getLatitude());
+                intent.putExtra("longitude",product.getLongitude());
                 context.startActivity(intent);
             }
         });

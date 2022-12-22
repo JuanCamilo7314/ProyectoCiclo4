@@ -18,36 +18,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <EditText
-            android:id="@+id/editIdFormProduct"
-            android:layout_width="50dp"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="number" />
-
-        <Button
-            android:id="@+id/btnGetFormProduct"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/btnGet" />
-
-        <Button
-            android:id="@+id/btnDeleteFormProduct"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/btnDelete" />
-
-        <Button
-            android:id="@+id/btnUpdateFormProduct"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/btnUpdate" />
-    </LinearLayout>
+        android:orientation="horizontal"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -57,9 +28,14 @@
 
         <ImageView
             android:id="@+id/imageFormProduct"
-            android:layout_width="350dp"
-            android:layout_height="350dp"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
             app:srcCompat="@drawable/addimage" />
+
+        <org.osmdroid.views.MapView
+            android:id="@+id/mapForm"
+            android:layout_width="350dp"
+            android:layout_height="350dp"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -127,11 +103,38 @@
                 />
         </LinearLayout>
 
-        <Button
-            android:id="@+id/btnFormProduct"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/btnAdd" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <Button
+                android:id="@+id/btnFormProduct"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/btnAdd" />
+
+            <Space
+                android:layout_width="1px"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+            <TextView
+                android:id="@+id/textLatitudeFormProduct"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/latitude" />
+
+            <TextView
+                android:id="@+id/textLongitudeFormProduct"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/longitude" />
+
+
+
+        </LinearLayout>
+
     </LinearLayout>
 
 </LinearLayout>

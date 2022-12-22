@@ -15,6 +15,15 @@
     //String Home
     <string name="btnToHome">Back</string>
 
+    <string name="btnRegister">Register</string>
+    <string name="btnSingUp">Sing In</string>7
+
+    <string name="Map">Map</string>
+
+    <string name="Email">Email</string>
+    <string name="Password">Password</string>
+    <string name="ConfirmPass">Confirm Password</string>
+
 
     //String Menu
     <string name="btnAdd">Add</string>
@@ -28,6 +37,8 @@
     <string name="name">Name</string>
     <string name="description">Description</string>
     <string name="price">Price</string>
+    <string name="latitude">Latitude</string>
+    <string name="longitude">Longitude</string>
 
 
 </resources>

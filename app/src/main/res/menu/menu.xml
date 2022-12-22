@@ -22,6 +22,10 @@
                 android:id="@+id/actionAdd"
                 app:showAsAction="ifRoom"
                 android:title="@string/btnAdd" />
+            <item
+                android:id="@+id/actionMap"
+                app:showAsAction="ifRoom"
+                android:title="@string/Map" />
         </menu>
     </item>
 </menu>

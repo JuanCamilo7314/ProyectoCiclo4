@@ -8,7 +8,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.g104g5.appciclo4.BD.DBHelper;
 import com.g104g5.appciclo4.Entities.Product;
 import com.g104g5.appciclo4.Services.ProductServices;
@@ -32,18 +34,27 @@ public class Products extends AppCompatActivity {
         textProductDescription = (TextView) findViewById(R.id.textProductDescription);
         imageProduct = (ImageView) findViewById(R.id.imageProduct);
         textPrice = (TextView) findViewById(R.id.textPrice);
-        dbHelper = new DBHelper(this);
+        //dbHelper = new DBHelper(this);
         productServices = new ProductServices();
 
         Intent intentIn = getIntent();
-        String id = intentIn.getStringExtra("id");
-        ArrayList<Product> list = productServices.cursorToArray(dbHelper.getDataById(id));
-        Product product = list.get(0);
 
-        textProductTittle.setText(product.getName());
-        textProductDescription.setText(product.getDescription());
-        textPrice.setText(String.valueOf(product.getPrice()));
-        imageProduct.setImageBitmap(productServices.byteToBitmap(product.getImage()));
+
+        textProductTittle.setText(intentIn.getStringExtra("name"));
+        textProductDescription.setText(intentIn.getStringExtra("description"));
+        textPrice.setText(intentIn.getStringExtra("price"));
+
+        Glide.with(getApplicationContext()).load(intentIn.getStringExtra("image"))
+                .override(150,150)
+                .into(imageProduct);
+
+        //ArrayList<Product> list = productServices.cursorToArray(dbHelper.getDataById(id));
+        //Product product = list.get(0);
+
+        //textProductTittle.setText(product.getName());
+        //textProductDescription.setText(product.getDescription());
+        //textPrice.setText(String.valueOf(product.getPrice()));
+        //imageProduct.setImageBitmap(productServices.byteToBitmap(product.getImage()));
 
         btnToHome.setOnClickListener(new View.OnClickListener() {
             @Override
