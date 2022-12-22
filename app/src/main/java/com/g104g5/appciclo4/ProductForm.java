@@ -99,7 +99,7 @@ public class ProductForm extends AppCompatActivity {
         map.setMultiTouchControls(true);
 
         if (edit){
-
+            urlImage = intentIn.getStringExtra("image");
             Glide.with(ProductForm.this).load(intentIn.getStringExtra("image"))
                     .override(150,150)
                     .into(imageFromProduct);
@@ -177,7 +177,7 @@ public class ProductForm extends AppCompatActivity {
                                             @Override
                                             public void onSuccess(Uri uri) {
                                                 Uri downloadurl = uri;
-                                                urlImage = downloadurl.toString();
+                                                urlImage = String.valueOf(downloadurl);
                                                 Glide.with(ProductForm.this).load(downloadurl)
                                                         .override(150,150)
                                                         .into(imageFromProduct);
@@ -204,6 +204,7 @@ public class ProductForm extends AppCompatActivity {
         btnFormProduct.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 Product product = new Product(
                         editNameFormProduct.getText().toString(),
                         editDescriptionFormProduct.getText().toString(),
@@ -215,6 +216,7 @@ public class ProductForm extends AppCompatActivity {
                 );
                 //dbHelper.insertData(product);
                 if(edit){
+                    Toast.makeText(getApplicationContext(),urlImage,Toast.LENGTH_SHORT).show();
                     product.setImage(urlImage);
                     product.setId(intentIn.getStringExtra("id"));
                     dbFirebase.updateDataById(product);
